@@ -9,17 +9,6 @@ const ProductDetail = ({ product }) => {
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
 
-  // Mock reviews data - in a real app, this would come from your API
-  const reviews = {
-    average: 4.8,
-    total: 124,
-    breakdown: [5, 4, 3, 2, 1].map(stars => ({
-      stars,
-      percentage: Math.random() * 100,
-      count: Math.floor(Math.random() * 100)
-    }))
-  };
-
   if (router.isFallback) {
     return (
       <div className="min-h-screen flex items-center justify-center">
@@ -53,7 +42,6 @@ const ProductDetail = ({ product }) => {
 
       <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          {/* Go Back Button */}
           <div className="mb-4">
             <button
               onClick={() => router.back()}
@@ -63,7 +51,6 @@ const ProductDetail = ({ product }) => {
             </button>
           </div>
 
-          {/* Breadcrumb */}
           <nav className="flex mb-8 text-gray-500 text-sm">
             <button
               onClick={() => router.push('/product')}
@@ -77,7 +64,6 @@ const ProductDetail = ({ product }) => {
 
           <div className="bg-white rounded-2xl shadow-lg overflow-hidden">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 p-8">
-              {/* Image Gallery */}
               <div className="space-y-4">
                 <div className="relative aspect-square overflow-hidden rounded-xl">
                   <Image
@@ -105,8 +91,7 @@ const ProductDetail = ({ product }) => {
                     <button
                       key={index}
                       onClick={() => setSelectedImage(index)}
-                      className={`relative aspect-square rounded-lg overflow-hidden ${selectedImage === index ? 'ring-2 ring-purple-500' : ''
-                        }`}
+                      className={`relative aspect-square rounded-lg overflow-hidden ${selectedImage === index ? 'ring-2 ring-purple-500' : ''}`}
                     >
                       <Image
                         src={image}
@@ -119,35 +104,22 @@ const ProductDetail = ({ product }) => {
                 </div>
               </div>
 
-              {/* Product Info */}
               <div className="space-y-6">
-                <div className="space-y-2">
-                  <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
-                  <div className="flex items-center space-x-4">
-                    <div className="flex items-center">
-                      {[...Array(5)].map((_, i) => (
-                        <Star
-                          key={i}
-                          className={`w-5 h-5 ${i < Math.floor(reviews.average)
-                            ? 'text-yellow-400 fill-current'
-                            : 'text-gray-300'
-                            }`}
-                        />
-                      ))}
-                    </div>
-                    <span className="text-sm text-gray-500">
-                      {reviews.total} reviews
-                    </span>
+                <h1 className="text-3xl font-bold text-gray-900">{product.name}</h1>
+                <div className="flex items-center space-x-4">
+                  <div className="flex items-center">
+                    {[...Array(5)].map((_, i) => (
+                      <Star
+                        key={i}
+                        className={`w-5 h-5 ${i < Math.floor(product.averageRating) ? 'text-yellow-400 fill-current' : 'text-gray-300'}`}
+                      />
+                    ))}
                   </div>
+                  <span className="text-sm text-gray-500">{product.totalReviews} reviews</span>
                 </div>
 
-                <div className="text-3xl font-bold text-purple-600">
-                  ${product.price.toFixed(2)}
-                </div>
-
-                <div className="prose prose-sm text-gray-500">
-                  <p>{product.description}</p>
-                </div>
+                <div className="text-3xl font-bold text-purple-600">${product.price.toFixed(2)}</div>
+                <div className="prose prose-sm text-gray-500"><p>{product.description}</p></div>
 
                 <div className="space-y-4">
                   <div className="flex items-center space-x-4">
@@ -169,9 +141,7 @@ const ProductDetail = ({ product }) => {
                         <ChevronRight className="w-4 h-4" />
                       </button>
                     </div>
-                    <span className="text-sm text-gray-500">
-                      {product.stock} items available
-                    </span>
+                    <span className="text-sm text-gray-500">{product.stock} items available</span>
                   </div>
 
                   <div className="flex space-x-4">
@@ -188,7 +158,6 @@ const ProductDetail = ({ product }) => {
                   </div>
                 </div>
 
-                {/* Additional Info */}
                 <div className="border-t pt-6 space-y-4">
                   <div className="flex justify-between text-sm">
                     <span className="text-gray-500">Category</span>
@@ -214,12 +183,10 @@ const ProductDetail = ({ product }) => {
                           <Star key={i} className="w-5 h-5 fill-current" />
                         ))}
                       </div>
-                      <span className="text-gray-600">
-                        Based on {reviews.total} reviews
-                      </span>
+                      <span className="text-gray-600">Based on {product.totalReviews} reviews</span>
                     </div>
                     <div className="space-y-2">
-                      {reviews.breakdown.map((item) => (
+                      {product?.reviews?.map((item) => (
                         <div key={item.stars} className="flex items-center space-x-4">
                           <div className="flex items-center space-x-1 w-20">
                             <span>{item.stars}</span>
@@ -231,9 +198,7 @@ const ProductDetail = ({ product }) => {
                               style={{ width: `${item.percentage}%` }}
                             ></div>
                           </div>
-                          <span className="text-sm text-gray-500">
-                            {item.count}
-                          </span>
+                          <span className="text-sm text-gray-500">{item.count}</span>
                         </div>
                       ))}
                     </div>
@@ -252,7 +217,12 @@ export default ProductDetail;
 
 export async function getStaticPaths() {
   try {
-    const response = await fetch('http://localhost:3000/api/products');
+    const response = await fetch('http://localhost:3000/api/product'); // Updated endpoint
+    
+    if (!response.ok) {
+      throw new Error('Failed to fetch products');
+    }
+
     const data = await response.json();
     const products = data.products;
 
@@ -289,6 +259,7 @@ export async function getStaticProps({ params }) {
       props: {
         product,
       },
+      revalidate: 60, // Add revalidation with a 60-second interval
     };
   } catch (error) {
     console.error('Error in getStaticProps:', error);
