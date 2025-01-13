@@ -1,70 +1,16 @@
 // pages/index.jsx
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
-import { ShoppingCart, Search, User, Menu, X, Heart, ChevronLeft, ChevronRight, Star, TrendingUp } from 'lucide-react';
-import Header from './components/Header';
+import { Heart, ChevronLeft, ChevronRight, Star, TrendingUp } from 'lucide-react';
+import { featuredProducts } from '@/utils/constants';
 
 export default function HomePage() {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [isScrolled, setIsScrolled] = useState(false);
 
-  // Handle scroll for header transparency
-  useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 0);
-    };
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);   
 
-  const featuredProducts = [
-    {
-      id: 1,
-      name: 'Premium Watch X1',
-      price: '$299.99',
-      rating: 4.8,
-      sales: 1200,
-      image: 'https://images.unsplash.com/photo-1523275335684-37898b6baf30',
-      tag: 'New Arrival'
-    },
-    {
-      id: 2,
-      name: 'Designer Bag Pro',
-      price: '$199.99',
-      rating: 4.9,
-      sales: 890,
-      image: 'https://images.unsplash.com/photo-1584917865442-de89df76afd3',
-      tag: 'Best Seller'
-    },
-    {
-      id: 3,
-      name: 'Smart Device V2',
-      price: '$399.99',
-      rating: 4.7,
-      sales: 750,
-      image: 'https://images.unsplash.com/photo-1546868871-7041f2a55e12',
-      tag: 'Hot'
-    },
-    {
-      id: 4,
-      name: 'Luxury Perfume',
-      price: '$89.99',
-      rating: 4.9,
-      sales: 2000,
-      image: 'https://images.unsplash.com/photo-1541643600914-78b084683601',
-      tag: 'Limited'
-    },
-    {
-      id: 5,
-      name: 'Premium Headphones',
-      price: '$249.99',
-      rating: 4.8,
-      sales: 1500,
-      image: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e',
-      tag: 'Trending'
-    },
-  ];
+
+
 
   const nextSlide = () => {
     setCurrentSlide((prev) => (prev + 1) % featuredProducts.length);
@@ -77,9 +23,6 @@ export default function HomePage() {
   return (
     <div className="min-h-screen">
       {/* Header */}
-     
-      <Header isScrolled={isScrolled} setIsMenuOpen={setIsMenuOpen} isMenuOpen={isMenuOpen}/>         
-
       {/* Hero Section */}
       <section className="relative min-h-screen bg-gradient-to-r from-purple-900 via-pink-800 to-purple-900">
         <div className="absolute inset-0 bg-black/30" />
@@ -105,7 +48,7 @@ export default function HomePage() {
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <button className="px-6 sm:px-8 py-3 sm:py-4 bg-white text-purple-900 rounded-full text-base sm:text-lg font-semibold hover:bg-purple-100 transition-colors">
-               
+
                 <Link href="/product">  Shop New Arrivals</Link>
               </button>
               <button className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-white rounded-full text-base sm:text-lg font-semibold hover:bg-white hover:text-purple-900 transition-all">
@@ -198,7 +141,7 @@ export default function HomePage() {
         </div>
       </section>
 
-     
+
       {/* Categories Grid */}
       <section className="py-12 sm:py-16 md:py-20">
         <div className="container mx-auto px-4">
@@ -437,87 +380,7 @@ export default function HomePage() {
       </section>
 
       {/* Footer */}
-      <footer className="bg-gray-900 text-gray-300">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12">
-            <div>
-              <Link href="/" className="flex items-center mb-6">
-                <span className="text-2xl font-bold text-white">
-                  LUXE
-                </span>
-              </Link>
-              <p className="mb-6">
-                Your destination for luxury fashion and accessories. Discover the latest trends and timeless classics.
-              </p>
-              <div className="flex space-x-4">
-                {['Facebook', 'Twitter', 'Instagram', 'Pinterest'].map((social) => (
-                  <a
-                    key={social}
-                    href="#"
-                    className="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-purple-600 transition-colors"
-                  >
-                    {/* Social icons can be added here */}
-                  </a>
-                ))}
-              </div>
-            </div>
 
-            <div>
-              <h3 className="text-white font-semibold text-lg mb-6">Quick Links</h3>
-              <ul className="space-y-4">
-                {['About Us', 'Contact Us', 'FAQs', 'Shipping Info', 'Returns', 'Track Order'].map((link) => (
-                  <li key={link}>
-                    <a href="#" className="hover:text-white transition-colors">
-                      {link}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-white font-semibold text-lg mb-6">Categories</h3>
-              <ul className="space-y-4">
-                {['Women\'s Fashion', 'Men\'s Collection', 'Accessories', 'Footwear', 'Watches', 'Jewelry'].map((category) => (
-                  <li key={category}>
-                    <a href="#" className="hover:text-white transition-colors">
-                      {category}
-                    </a>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div>
-              <h3 className="text-white font-semibold text-lg mb-6">Contact Info</h3>
-              <ul className="space-y-4">
-                <li className="flex items-start">
-                  <span className="mr-3">📍</span>
-                  123 Luxury Avenue, Fashion District, NY 10001
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-3">📞</span>
-                  +1 (234) 567-8900
-                </li>
-                <li className="flex items-start">
-                  <span className="mr-3">✉️</span>
-                  contact@luxe.com
-                </li>
-              </ul>
-            </div>
-          </div>
-
-          <div className="border-t border-gray-800 mt-12 pt-8">
-            <div className="flex flex-col md:flex-row justify-between items-center">
-              <p>&copy; 2025 LUXE. All rights reserved.</p>
-              <div className="flex items-center space-x-4 mt-4 md:mt-0">
-                <a href="#" className="hover:text-white transition-colors">Privacy Policy</a>
-                <span>•</span>
-                <a href="#" className="hover:text-white transition-colors">Terms of Service</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </footer>
     </div>
-    )}
+  )
+}

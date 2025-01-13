@@ -92,7 +92,6 @@ export default async function handler(req, res) {
                 minPrice = 0,
                 maxPrice = Number.MAX_SAFE_INTEGER,
                 categories = '',
-                brands = '',
             } = req.query;
 
             // Convert pagination parameters to numbers
@@ -103,33 +102,25 @@ export default async function handler(req, res) {
             // Build the filter query
             const filterQuery = {};
 
-            if (minPrice || maxPrice) {
-                filterQuery.price = {
-                    $gte: parseFloat(minPrice),
-                    $lte: parseFloat(maxPrice)
-                };
-            }
+            // Price filtering
+            filterQuery.price = {
+                $gte: parseFloat(minPrice),
+                $lte: parseFloat(maxPrice),
+            };
 
+            // Search by name or description
             if (search) {
                 filterQuery.$or = [
                     { name: { $regex: search, $options: 'i' } },
-                    { description: { $regex: search, $options: 'i' } }
+                    { description: { $regex: search, $options: 'i' } },
                 ];
             }
 
+            // Category filtering
             if (categories) {
                 const categoryArray = categories.split(',').filter(Boolean);
                 if (categoryArray.length > 0) {
-                    filterQuery.tag = { $in: categoryArray };
-                }
-            }
-
-            if (brands) {
-                const brandArray = brands.split(',').filter(Boolean);
-                if (brandArray.length > 0) {
-                    filterQuery.name = {
-                        $regex: new RegExp('^(' + brandArray.join('|') + ')', 'i')
-                    };
+                    filterQuery.category = { $in: categoryArray };
                 }
             }
 
@@ -140,7 +131,7 @@ export default async function handler(req, res) {
                     .limit(limitNumber)
                     .sort({ createdAt: -1 }) // Optional: sort by creation date
                     .lean(),
-                Product.countDocuments(filterQuery)
+                Product.countDocuments(filterQuery),
             ]);
 
             const totalPages = Math.ceil(total / limitNumber);
@@ -156,18 +147,18 @@ export default async function handler(req, res) {
                     limit: limitNumber,
                     totalPages,
                     hasNextPage,
-                    hasPrevPage
-                }
+                    hasPrevPage,
+                },
             });
-
         } catch (error) {
             console.error('Product API Error:', error);
             return res.status(500).json({
                 message: 'Error retrieving products',
-                error: error.message
+                error: error.message,
             });
         }
     }
+
 
 
 }

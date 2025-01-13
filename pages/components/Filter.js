@@ -3,7 +3,7 @@ import React from 'react'
 function Filter({handlePriceChange, selectedFilters}) {
   return (
       <div className="mb-8">
-          <h3 className="text-lg font-semibold mb-4">Price Range</h3>
+          <h3 className="text-lg font-semibold mb-4 text-gray-400">Price Range</h3>
           <div className="space-y-4">
               <div>
                   <label className="text-sm text-gray-600 block mb-2">Minimum ($)</label>
