@@ -6,7 +6,7 @@ import { AuthContext } from '@/contexts/AuthContext';
 import { Menu, Search, ShoppingCart, User, X } from 'lucide-react';
 import CartIcon from '@/components/CartIcon';
 
-function Header({ isScrolled = true, setIsMenuOpen, isMenuOpen }) {
+function Header({ isScrolled = false, setIsMenuOpen, isMenuOpen }) {
   const router = useRouter();
   const { setSelectedFilters, selectedFilters } = useContext(FilterContext);
   const { user, logout } = useContext(AuthContext);

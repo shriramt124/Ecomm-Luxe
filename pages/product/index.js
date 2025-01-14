@@ -107,7 +107,7 @@ const ProductPage = ({ initialProducts, initialPagination, initialFilters }) => 
     };
 
     return (
-        <div className='flex flex-col gap-[100px] '>
+        <div className='flex flex-col gap-[100px]   '>
             <div className="mt-[100px] min-h-screen bg-gray-50">
                 <MobileFilter setMobileFilterOpen={setMobileFilterOpen} mobileFilterOpen={mobileFilterOpen} />
 
