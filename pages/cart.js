@@ -14,12 +14,7 @@ const CartPage = () => {
   const { user } = useContext(AuthContext);
   const router = useRouter();
 
-  useEffect(() => {
-    if (!user) {
-      toast.error("Please login to view cart")
-       router.push('/login');
-     }
-  },[user,router])
+   
   
   useEffect(() => {
     if (user) {

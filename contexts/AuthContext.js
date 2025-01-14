@@ -18,7 +18,7 @@ export const AuthProvider = ({ children }) => {
         console.log('Token from local storage:', token); // Debugging log
         if (!token) {
           console.log('No token found, redirecting to login.');
-          //router.push('/login'); // Redirect to login page
+          router.push('/login'); // Redirect to login page
           setUser(null)
           setLoading(false);
           return;
@@ -80,6 +80,7 @@ export const AuthProvider = ({ children }) => {
       await fetch('/api/auth/logout', { method: 'POST' });
       localStorage.removeItem('token'); // Remove token from local storage
       setUser(null);
+      router.push("/login")
     } catch (error) {
       console.error('Logout failed:', error);
     }
