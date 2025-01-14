@@ -1,5 +1,6 @@
 import connectDb from '../../../lib/dbConnect';
 import Cart from '../../../model/cart.model';
+import Product from '../../../model/product.model';
 
 export default async function handler(req, res) {
   await connectDb();
@@ -27,9 +28,21 @@ export default async function handler(req, res) {
       return res.status(404).json({ message: 'Product not found in cart' });
     }
 
-    // Recalculate total price
-    const productPrice = 10; // Replace with actual product price retrieval logic
-    cart.totalPrice = cart.products.reduce((total, item) => total + (item.quantity * productPrice), 0);
+    // Fetch all products in the cart to get their prices
+    const productIds = cart.products.map(item => item.productId);
+    const products = await Product.find({ _id: { $in: productIds } });
+
+    // Create a map of product prices for quick lookup
+    const productPriceMap = products.reduce((map, product) => {
+      map[product._id.toString()] = product.price;
+      return map;
+    }, {});
+
+    // Recalculate total price using the product price map
+    cart.totalPrice = cart.products.reduce((total, item) => {
+      const price = productPriceMap[item.productId.toString()];
+      return total + (item.quantity * price);
+    }, 0);
 
     await cart.save();
 

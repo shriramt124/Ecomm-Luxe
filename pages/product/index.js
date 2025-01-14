@@ -49,7 +49,7 @@ const ProductPage = ({ initialProducts, initialPagination, initialFilters }) => 
                 `http://localhost:3000/api/product?${queryParams}`
             );
             const data = await response.json();
-
+            console.log(data,"from index js file")
             setProducts(data.products);
             setTotalProducts(data.pagination.total);
             setLoading(false);

@@ -4,6 +4,7 @@ import { FilterContextProvider } from '@/contexts/FilterContext';
 import { AuthProvider } from '@/contexts/AuthContext';
 import { CartProvider } from '@/contexts/CartContext';
  import "@/styles/globals.css"
+import { ToastContainer } from 'react-toastify';
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -44,6 +45,18 @@ export default function App({ Component, pageProps }) {
           <Layout>
             <Component {...pageProps} />
           </Layout>
+          <ToastContainer
+            position="top-right"
+            autoClose={3000}
+            hideProgressBar={false}
+            newestOnTop={false}
+            closeOnClick
+            rtl={false}
+            pauseOnFocusLoss
+            draggable
+            pauseOnHover
+          
+          />
         </CartProvider>
       </FilterContextProvider>
     </AuthProvider>

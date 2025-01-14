@@ -44,7 +44,10 @@ const CartPage = () => {
       await updateCart(productId, newQuantity);
       await fetchCart()
 
-      toast.success('Cart updated successfully');
+      toast.success('Cart updated successfully', {
+        
+        style:{width:"300px"}
+      });
     } catch (error) {
       console.log(error)
       toast.error('Failed to update quantity');
@@ -67,7 +70,9 @@ const CartPage = () => {
       toast.success('Item removed from cart');
     } catch (error) {
       console.log(error,"froom remove item")
-      toast.error('Failed to remove item');
+      toast.error('Failed to remove item', {
+        className:"w-[200px] sm:w-[300px]"
+      });
     } finally {
       setIsUpdating(false);
     }
@@ -89,7 +94,7 @@ const CartPage = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center">
+      <div className="min-h-screen   flex flex-col items-center justify-center">
         <Loader2 className="w-12 h-12 animate-spin text-purple-600 mb-4" />
         <p className="text-gray-600">Loading your cart...</p>
       </div>
@@ -98,7 +103,7 @@ const CartPage = () => {
 
   if (!cart || !cart.products || cart.products.length === 0) {
     return (
-      <div className="min-h-screen flex flex-col bg-gray-50 items-center justify-center p-4">
+      <div className="min-h-screen  flex flex-col bg-gray-50 items-center justify-center p-4">
         <div className="text-center space-y-6">
           <ShoppingBag className="w-20 h-20 text-gray-400 mx-auto" />
           <h1 className="text-2xl font-bold text-gray-800">Your cart is empty</h1>
@@ -119,7 +124,7 @@ const CartPage = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen  mt-[90px] bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
       <div className="max-w-7xl mx-auto">
         <h1 className="text-3xl font-bold text-gray-900 mb-8 flex items-center">
           <ShoppingBag className="w-8 h-8 mr-3 text-purple-600" />

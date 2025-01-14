@@ -1,5 +1,5 @@
 // filepath: /c:/Users/Lenovo/Music/ecomm-renderings/pages/components/AppContext.js
-import React, { createContext, useState } from 'react';
+import React, { createContext, useEffect, useState } from 'react';
 
 export const FilterContext = createContext();
 
@@ -9,6 +9,10 @@ export const FilterContextProvider = ({ children }) => {
         brands: [],
         priceRange: { min: 0, max: 2000 },
     });
+
+    useEffect(() => {
+         
+    },[setSelectedFilters])
 
     return (
         <FilterContext.Provider value={{ selectedFilters, setSelectedFilters }}>

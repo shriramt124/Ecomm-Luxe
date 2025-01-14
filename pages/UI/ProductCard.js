@@ -39,13 +39,9 @@ function ProductCard({ product }) {
                             ${product.price.toLocaleString()}
                         </span>
                         {product.stock > 0 ? (
-                            user ? (
+                            
                                 <AddToCartButton productId={product._id} />
-                            ) : (
-                                <span className="text-red-500 text-sm font-medium">
-                                    Please log in to add to cart
-                                </span>
-                            )
+                            
                         ) : (
                             <span className="text-red-500 text-sm font-medium">
                                 Out of Stock

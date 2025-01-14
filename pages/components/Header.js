@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { FilterContext } from '@/contexts/FilterContext';
@@ -8,19 +8,19 @@ import CartIcon from '@/components/CartIcon'; // Import CartIcon
 
 function Header({ isScrolled = true, setIsMenuOpen, isMenuOpen }) {
   const router = useRouter();
-  const { setSelectedFilters } = useContext(FilterContext);
+  const { setSelectedFilters,selectedFilters } = useContext(FilterContext);
   const { user, logout } = useContext(AuthContext);
 
-  const handleNavigation = async (category) => {
+  const handleNavigation = async (categories) => {
     setSelectedFilters((prevFilters) => ({
       ...prevFilters,
-      categories: [category],
+      categories: [categories],
     }));
 
     await router.push({
       pathname: '/product',
       query: {
-        category,
+        categories,
         page: 1,
         search: '',
         minPrice: 0,
@@ -29,6 +29,9 @@ function Header({ isScrolled = true, setIsMenuOpen, isMenuOpen }) {
     }, undefined, { shallow: true });
   };
 
+  useEffect(() => {
+    console.log(selectedFilters)
+ },[selectedFilters])
   return (
     <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md text-black hover:text-grey-900' : 'bg-transparent text-white'}`}>
       <div className="container mx-auto px-4 lg:px-8">
@@ -40,20 +43,22 @@ function Header({ isScrolled = true, setIsMenuOpen, isMenuOpen }) {
           </Link>
 
           <nav className="hidden md:flex items-center space-x-4 lg:space-x-8">
-            {['New Arrivals', 'Women', 'Men', 'Accessories', 'Sale'].map((item) => (
+            {['New Arrivals', 'Women', 'Men', 'Accessories', 'Electronics'].map((item) => (
               <button
                 key={item}
                 onClick={() => handleNavigation(item)}
                 className="text-sm lg:text-base text-gray-500 hover:text-purple-600 font-medium transition-colors"
               >
-                {item}
+                
+                  {item}
+               
               </button>
             ))}
           </nav>
 
           <div className="hidden md:flex items-center space-x-4 lg:space-x-6">
             <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-              <Search className="w-5 h-5 lg:w-6 lg:h-6" />
+              <Search className="w-5 h-5 lg:w-6 lg:h-6" onClick={()=>router.push("/product")} />
             </button>
             <CartIcon /> {/* Add CartIcon here */}
             {user ? (
