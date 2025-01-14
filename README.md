@@ -1,5 +1,5 @@
 # folder structure 
- ecomm-renderings/
+ `ecomm-renderings/
 ├── .gitignore
 ├── c
 ├── eslint.config.mjs
@@ -91,7 +91,7 @@
 ├── styles/
 │   └── globals.css
 └── utils/
-    └── constants.js
+    └── constants.js`
 
 # Key Directories and Their Purpose:
 
