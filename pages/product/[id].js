@@ -42,8 +42,6 @@ const ProductDetail = ({ product }) => {
 
       <div className="min-h-screen mt-[100px] bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          
-
           <nav className="flex mb-8 text-gray-500 text-sm">
             <button
               onClick={() => router.push('/product')}
@@ -210,7 +208,8 @@ export default ProductDetail;
 
 export async function getStaticPaths() {
   try {
-    const response = await fetch('http://localhost:3000/api/product'); // Updated endpoint
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000'; 
+    const response = await fetch(`${baseUrl}/api/product`); // Updated endpoint
     
     if (!response.ok) {
       throw new Error('Failed to fetch products');
@@ -238,7 +237,9 @@ export async function getStaticPaths() {
 
 export async function getStaticProps({ params }) {
   try {
-    const response = await fetch(`http://localhost:3000/api/product/${params.id}`);
+    const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
+    const response = await fetch(`${baseUrl}/api/product/${params.id}`); // Updated endpoint
+
     const data = await response.json();
     const product = data.product;
 
