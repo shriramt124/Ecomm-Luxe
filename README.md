@@ -148,6 +148,4 @@ Global CSS styles:
 Utility functions and constants:
 - `constants.js`: Centralized constants for the application.
 
----
-
-This structured explanation provides clarity on the purpose of each folder and file in the project. You can paste this directly into your `README.md`.
+ 
