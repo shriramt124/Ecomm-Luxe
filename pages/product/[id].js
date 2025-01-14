@@ -40,16 +40,9 @@ const ProductDetail = ({ product }) => {
         <meta name="description" content={product.description} />
       </Head>
 
-      <div className="min-h-screen bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+      <div className="min-h-screen mt-[100px] bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
         <div className="max-w-7xl mx-auto">
-          <div className="mb-4">
-            <button
-              onClick={() => router.back()}
-              className="bg-purple-600 text-white px-4 py-2 rounded-lg font-semibold hover:bg-purple-700 transition-colors"
-            >
-              Go Back
-            </button>
-          </div>
+          
 
           <nav className="flex mb-8 text-gray-500 text-sm">
             <button

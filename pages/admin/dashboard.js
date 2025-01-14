@@ -40,7 +40,7 @@ const AdminPage = () => {
   const debouncedSearch = useCallback(
     debounce((query) => {
       setSearchQuery(query);
-    }, 2000),
+    },1000),
     []
   );
 

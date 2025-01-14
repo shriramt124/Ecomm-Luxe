@@ -46,7 +46,7 @@ const ProductPage = ({ initialProducts, initialPagination, initialFilters }) => 
             });
 
             const response = await fetch(
-                `http://localhost:3000/api/product?${queryParams}`
+                `/api/product?${queryParams}`
             );
             const data = await response.json();
             console.log(data,"from index js file")
