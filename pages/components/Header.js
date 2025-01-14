@@ -34,7 +34,7 @@ function Header({ isScrolled = true, setIsMenuOpen, isMenuOpen }) {
   }, [selectedFilters]);
 
   return (
-    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md text-black hover:text-grey-900' : 'bg-transparent text-white '}`}>
+    <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md text-black hover:text-grey-900' : 'bg-black text-white '}`}>
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20 px-4">
           <Link href="/" className="flex items-center">
