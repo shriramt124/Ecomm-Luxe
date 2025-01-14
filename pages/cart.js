@@ -14,24 +14,24 @@ const CartPage = () => {
   const { user } = useContext(AuthContext);
   const router = useRouter();
 
-  // Redirect to login if user is not authenticated
   useEffect(() => {
     if (!user) {
-      toast.error("Please login to view your cart");
-      router.push("/login");
-    }
-  }, [user, router]);
-
-  // Fetch cart data
+      toast.error("Please login to view cart")
+       router.push('/login');
+     }
+  },[user,router])
+  
   useEffect(() => {
     if (user) {
       try {
         fetchCart();
+      
       } catch (error) {
         console.log(error, "from useEffect error");
-        toast.error('Failed to fetch cart items');
+         
       }
-    }
+    
+    } 
   }, [user]);
 
   // Update local quantities when cart changes
@@ -102,6 +102,7 @@ const CartPage = () => {
       }
     }
   };
+   
 
   if (loading) {
     return (
@@ -133,6 +134,8 @@ const CartPage = () => {
       </div>
     );
   }
+
+   
 
   return (
     <div className="min-h-screen mt-[90px] bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">

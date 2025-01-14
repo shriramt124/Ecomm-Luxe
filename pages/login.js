@@ -13,7 +13,10 @@ const Login = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await login({ email, password });
+    console.log("response on submit ",response)
     if (response.success) {
+      // Store token in local storage
+     // localStorage.setItem('token', response.token); // Ensure token is stored
       router.push('/');
     } else {
       setError(response.message);

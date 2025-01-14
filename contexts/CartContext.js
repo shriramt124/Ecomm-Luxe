@@ -119,9 +119,9 @@ export const CartProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    if (user){
-    fetchCart();
-  }
+    if (user) {
+      fetchCart();
+    }
   }, [user]);
 
   return (

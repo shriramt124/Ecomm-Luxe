@@ -32,18 +32,13 @@ export default async function handler(req, res) {
       { expiresIn: '1d' }
     );
 
-    // Set cookie with token
-    res.setHeader(
-      'Set-Cookie',
-      `token=${token}; HttpOnly; Path=/; Max-Age=${60 * 60 * 24}; SameSite=Strict`
-    );
-
-    // Return user data (excluding password)
+    // Return user data and token
     const userData = {
       _id: user._id,
       username: user.username,
       email: user.email,
       role: user.role,
+      token: token, // Include the token in the response
     };
 
     return res.status(200).json({ user: userData });
