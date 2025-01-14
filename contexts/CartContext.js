@@ -18,9 +18,9 @@ export const CartProvider = ({ children }) => {
 
     try {
       const response = await fetch(`/api/cart/get?userId=${user._id}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch cart');
-      }
+      // if (!response.ok) {
+      //   throw new Error('Failed to fetch cart');
+      // }
       const data = await response.json();
       setCart(data);
     } catch (error) {
@@ -119,7 +119,9 @@ export const CartProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    if (user){
     fetchCart();
+  }
   }, [user]);
 
   return (

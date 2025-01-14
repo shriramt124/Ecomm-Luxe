@@ -52,7 +52,8 @@ export default function HomePage() {
                 <Link href="/product">  Shop New Arrivals</Link>
               </button>
               <button className="px-6 sm:px-8 py-3 sm:py-4 border-2 border-white rounded-full text-base sm:text-lg font-semibold hover:bg-white hover:text-purple-900 transition-all">
-                View Collections
+                
+                <Link href="/product">  View Collections</Link>
               </button>
             </div>
           </div>

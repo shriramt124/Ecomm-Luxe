@@ -1,7 +1,7 @@
 import Product from '@/model/product.model';
 import connectDb from '@/lib/dbConnect';
 import Cart from '@/model/cart.model';
- 
+
 
 export default async function handler(req, res) {
   await connectDb();

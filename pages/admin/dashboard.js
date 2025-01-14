@@ -1,11 +1,25 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { Users, Package, Plus, Trash2, Edit, Search } from 'lucide-react';
 import { toast, ToastContainer } from 'react-toastify';
+import { useRouter } from 'next/router';
 import 'react-toastify/dist/ReactToastify.css';
 import ProductModal from '@/components/ProductModal';
 import debounce from 'lodash/debounce';
- 
+import { useContext } from 'react';
+import { AuthContext } from '@/contexts/AuthContext';
+
 const AdminPage = () => {
+  const router = useRouter();
+  const { user } = useContext(AuthContext);
+
+  // Redirect if user is not an admin
+  useEffect(() => {
+    if (!user || user.role !== 'admin') {
+      toast.error("You are not authorized to view this page")
+      router.push('/');
+    }
+  }, [user, router]);
+
   const [activeTab, setActiveTab] = useState('products');
   const [users, setUsers] = useState([]);
   const [products, setProducts] = useState([]);
@@ -77,7 +91,6 @@ const AdminPage = () => {
     }
   };
 
-
   const fetchUsers = async () => {
     setIsLoading(true);
     try {
@@ -92,7 +105,6 @@ const AdminPage = () => {
     }
   };
 
-  
   const handleDeleteUser = async (userId) => {
     if (window.confirm('Are you sure you want to delete this user?')) {
       try {
@@ -234,7 +246,6 @@ const AdminPage = () => {
                 className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow"
               >
                 <div className="flex flex-col sm:flex-row items-center p-4">
-                  {/* Product image */}
                   <div className="w-full sm:w-24 h-24 mb-4 sm:mb-0">
                     {product.images?.[0] && (
                       <img
@@ -245,7 +256,6 @@ const AdminPage = () => {
                     )}
                   </div>
 
-                  {/* Product details */}
                   <div className="flex-grow sm:ml-4 w-full">
                     <div className="flex justify-between items-start">
                       <div>
@@ -281,7 +291,6 @@ const AdminPage = () => {
             ))}
           </div>
 
-          {/* Load More button */}
           {hasMore && (
             <div className="flex justify-center mt-6">
               <button
@@ -378,3 +387,4 @@ const AdminPage = () => {
 };
 
 export default AdminPage;
+ 

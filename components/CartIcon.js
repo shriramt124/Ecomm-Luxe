@@ -1,9 +1,18 @@
 import React from 'react';
 import { useCart } from '@/contexts/CartContext';
+import { useRouter } from 'next/router';
+import { useContext } from 'react';
+import { AuthContext } from '@/contexts/AuthContext';
 import Link from 'next/link';
 
 const CartIcon = () => {
   const { cart } = useCart();
+  const { user } = useContext(AuthContext);
+  const router = useRouter();
+
+  if (!user) {
+    return null; // Hide the cart icon if the user is not logged in
+  }
 
   return (
     <Link href="/cart">
