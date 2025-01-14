@@ -12,12 +12,12 @@ import { FilterContext } from '@/contexts/FilterContext';
 const ProductPage = ({ initialProducts, initialPagination, initialFilters }) => {
     const router = useRouter();
     const { selectedFilters, setSelectedFilters } = useContext(FilterContext);
-    const [products, setProducts] = useState(initialProducts);
+    const [products, setProducts] = useState(initialProducts || []);
     const [loading, setLoading] = useState(false);
-    const [totalProducts, setTotalProducts] = useState(initialPagination.total);
+    const [totalProducts, setTotalProducts] = useState(initialPagination?.total || 0);
     const [mobileFilterOpen, setMobileFilterOpen] = useState(false);
     const [searchQuery, setSearchQuery] = useState('');
-    const [currentPage, setCurrentPage] = useState(initialPagination.page);
+    const [currentPage, setCurrentPage] = useState(initialPagination?.page || 1);
     const productsPerPage = 6;
 
     useEffect(() => {
@@ -49,9 +49,9 @@ const ProductPage = ({ initialProducts, initialPagination, initialFilters }) => 
                 `/api/product?${queryParams}`
             );
             const data = await response.json();
-            console.log(data,"from index js file")
-            setProducts(data.products);
-            setTotalProducts(data.pagination.total);
+            console.log(data, "from index js file");
+            setProducts(data.products || []);
+            setTotalProducts(data.pagination?.total || 0);
             setLoading(false);
         } catch (error) {
             console.error('Error fetching products:', error);
@@ -173,7 +173,7 @@ const ProductPage = ({ initialProducts, initialPagination, initialFilters }) => 
 
                             <div className={`grid grid-cols-1 ${loading ? "md:grid-cols-1" : "md:grid-cols-2"} ${loading ? "xl:grid-cols-1" : "xl:grid-cols-3"} gap-6`}>
                                 {loading ? <Loader /> : products?.map(product => (
-                                    <ProductCard key={product._id} product={product} />
+                                    product && <ProductCard key={product._id} product={product} />
                                 ))}
                             </div>
 
@@ -235,8 +235,8 @@ export async function getServerSideProps({ query }) {
 
         return {
             props: {
-                initialProducts: data.products,
-                initialPagination: data.pagination,
+                initialProducts: data.products || [],
+                initialPagination: data.pagination || {},
                 initialFilters: filters
             },
         };
