@@ -1,29 +1,40 @@
 import React, { useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
+import { Loader2 } from 'lucide-react';
 
 const Register = () => {
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
+  const [isLoading, setIsLoading] = useState(false);
   const router = useRouter();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const response = await fetch('/api/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify({ username, email, password }),
-    });
+    setIsLoading(true);
+    setError(null);
 
-    const data = await response.json();
-    if (response.ok) {
-      router.push('/login');
-    } else {
-      setError(data.message);
+    try {
+      const response = await fetch('/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ username, email, password }),
+      });
+
+      const data = await response.json();
+      if (response.ok) {
+        router.push('/login');
+      } else {
+        setError(data.message);
+      }
+    } catch (err) {
+      setError('An error occurred. Please try again later.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -52,7 +63,8 @@ const Register = () => {
               value={username}
               onChange={(e) => setUsername(e.target.value)}
               required
-              className="border p-2.5 w-full rounded-md text-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-300 transition duration-200"
+              disabled={isLoading}
+              className="border p-2.5 w-full rounded-md text-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-300 transition duration-200 disabled:opacity-50"
               placeholder="Choose a username"
             />
           </div>
@@ -70,7 +82,8 @@ const Register = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              className="border p-2.5 w-full rounded-md text-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-300 transition duration-200"
+              disabled={isLoading}
+              className="border p-2.5 w-full rounded-md text-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-300 transition duration-200 disabled:opacity-50"
               placeholder="Enter your email"
             />
           </div>
@@ -88,16 +101,25 @@ const Register = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              className="border p-2.5 w-full rounded-md text-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-300 transition duration-200"
+              disabled={isLoading}
+              className="border p-2.5 w-full rounded-md text-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-300 transition duration-200 disabled:opacity-50"
               placeholder="Create a password"
             />
           </div>
 
           <button
             type="submit"
-            className="bg-white text-purple-600 px-4 py-2.5 w-full font-bold rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-300 transition duration-200"
+            disabled={isLoading}
+            className="bg-white text-purple-600 px-4 py-2.5 w-full font-bold rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-300 transition duration-200 disabled:opacity-50 flex items-center justify-center"
           >
-            Register
+            {isLoading ? (
+              <>
+                <Loader2 className="w-5 h-5 mr-2 animate-spin" />
+                Registering...
+              </>
+            ) : (
+              'Register'
+            )}
           </button>
         </form>
 

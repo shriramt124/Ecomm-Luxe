@@ -32,7 +32,7 @@ const CartPage = () => {
         toast.error('Failed to fetch cart items');
       }
     }
-  }, [user, fetchCart]);
+  }, [user]);
 
   // Update local quantities when cart changes
   useEffect(() => {
@@ -219,7 +219,7 @@ const CartPage = () => {
               <h2 className="text-xl font-bold text-gray-900 mb-6">Order Summary</h2>
               <div className="space-y-4">
                 <div className="flex justify-between text-gray-600">
-                  <span>Subtotal ({cart.products.length} items)</span>
+                  <span>Subtotal ({cart.products?.length} items)</span>
                   <span>${cart.totalPrice?.toFixed(2) || '0.00'}</span>
                 </div>
                 <div className="flex justify-between text-gray-600">

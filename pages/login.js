@@ -8,8 +8,8 @@ const Login = () => {
   const [password, setPassword] = useState('');
   const [error, setError] = useState(null);
   const router = useRouter();
-  const { login } = useContext(AuthContext);
-
+  const { login, loading } = useContext(AuthContext);
+   
   const handleSubmit = async (e) => {
     e.preventDefault();
     const response = await login({ email, password });
@@ -72,7 +72,7 @@ const Login = () => {
             type="submit"
             className="bg-white text-purple-600 px-4 py-2.5 w-full font-bold rounded-md hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-purple-300 transition duration-200"
           >
-            Login
+            {loading ? "Loading....":"Login"}
           </button>
         </form>
 

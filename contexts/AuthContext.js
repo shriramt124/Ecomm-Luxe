@@ -13,7 +13,7 @@ export const AuthProvider = ({ children }) => {
         const response = await fetch('/api/auth/session');
         const data = await response.json();
         if (data.user) {
-          setUser(data.user);
+          setUser(prevUser => (prevUser ? prevUser : data.user)); // Only set if user is not already set
         }
       } catch (error) {
         console.error('Auth check failed:', error);
