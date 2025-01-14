@@ -239,7 +239,6 @@ export async function getStaticProps({ params }) {
   try {
     const baseUrl = process.env.NEXT_PUBLIC_API_URL || 'http://localhost:3000';
     const response = await fetch(`${baseUrl}/api/product/${params.id}`); // Updated endpoint
-
     const data = await response.json();
     const product = data.product;
 

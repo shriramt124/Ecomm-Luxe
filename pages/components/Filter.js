@@ -5,7 +5,7 @@ function Filter({ handlePriceChange, selectedFilters }) {
   const priceRange = selectedFilters?.priceRange || { min: 0, max: 2000 };
 
   return (
-    <div className="mb-8">
+    <div className="mb-8 ">
       <h3 className="text-lg font-semibold mb-4 text-gray-400">Price Range</h3>
       <div className="space-y-4">
         <div>

@@ -115,8 +115,8 @@ const ProductPage = ({ initialProducts, initialPagination, initialFilters }) => 
                     <div className="flex flex-col lg:flex-row gap-8">
                         <div className={`lg:w-1/4 ${mobileFilterOpen ? 'fixed inset-0 z-40 bg-white overflow-y-auto p-4' : 'hidden lg:block'}`}>
                             <div className="bg-white rounded-2xl shadow-md p-6">
-                                <div className="flex justify-between items-center lg:hidden mb-4">
-                                    <h2 className="text-2xl font-bold">Filters</h2>
+                                <div className="flex justify-between items-center lg:hidden mb-4 mt-[50px] ">
+                                    <h2 className="text-2xl font-bold text-black">Filters</h2>
                                     <button onClick={() => setMobileFilterOpen(false)} className="text-gray-500 hover:text-gray-700">✕</button>
                                 </div>
 
