@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react';
 import Layout from '@/components/Layout';
 import { FilterContextProvider } from '@/contexts/FilterContext';
 import { AuthProvider } from '@/contexts/AuthContext';
-import '@/styles/globals.css'
+import { CartProvider } from '@/contexts/CartContext';
+ import "@/styles/globals.css"
 
 function ErrorFallback({ error, resetErrorBoundary }) {
   return (
@@ -37,10 +38,13 @@ export default function App({ Component, pageProps }) {
 
   return (
     <AuthProvider>
+
       <FilterContextProvider>
-        <Layout>
-          <Component {...pageProps} />
-        </Layout>
+        <CartProvider>
+          <Layout>
+            <Component {...pageProps} />
+          </Layout>
+        </CartProvider>
       </FilterContextProvider>
     </AuthProvider>
   );

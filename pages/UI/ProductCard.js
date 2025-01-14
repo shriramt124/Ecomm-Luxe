@@ -1,19 +1,25 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Link from 'next/link';
+import { AuthContext } from '@/contexts/AuthContext';
+import AddToCartButton from '@/components/AddToCartButton';
 
 function ProductCard({ product }) {
+    const { user } = useContext(AuthContext);
+
     return (
-        <Link href={`/product/${product._id}`} passHref>
+         
             <div
                 key={product._id}
                 className="bg-white rounded-2xl shadow-md overflow-hidden group hover:shadow-xl transition-shadow duration-300 cursor-pointer"
             >
-                <div className="relative">
+            <div className="relative">
+                <Link href={`/product/${product._id}`} passHref> 
                     <img
                         src={product.images[0]} // Display the first image
                         alt={product.name}
                         className="w-full h-64 object-cover transform group-hover:scale-105 transition-transform duration-500"
                     />
+                </Link>
                     <span className="absolute top-4 left-4 bg-purple-600 text-white px-4 py-2 rounded-full text-sm font-semibold">
                         {product.category}
                     </span>
@@ -33,9 +39,13 @@ function ProductCard({ product }) {
                             ${product.price.toLocaleString()}
                         </span>
                         {product.stock > 0 ? (
-                            <button className="px-6 py-2 bg-purple-600 text-white rounded-full hover:bg-purple-700 transition-colors">
-                                Add to Cart
-                            </button>
+                            user ? (
+                                <AddToCartButton productId={product._id} />
+                            ) : (
+                                <span className="text-red-500 text-sm font-medium">
+                                    Please log in to add to cart
+                                </span>
+                            )
                         ) : (
                             <span className="text-red-500 text-sm font-medium">
                                 Out of Stock
@@ -44,7 +54,7 @@ function ProductCard({ product }) {
                     </div>
                 </div>
             </div>
-        </Link>
+        
     );
 }
 

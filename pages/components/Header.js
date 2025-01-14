@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import { FilterContext } from '@/contexts/FilterContext';
 import { AuthContext } from '@/contexts/AuthContext';
 import { Menu, Search, ShoppingCart, User, X } from 'lucide-react';
+import CartIcon from '@/components/CartIcon'; // Import CartIcon
 
 function Header({ isScrolled = true, setIsMenuOpen, isMenuOpen }) {
   const router = useRouter();
@@ -30,10 +31,8 @@ function Header({ isScrolled = true, setIsMenuOpen, isMenuOpen }) {
 
   return (
     <header className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white shadow-md text-black hover:text-grey-900' : 'bg-transparent text-white'}`}>
-
       <div className="container mx-auto px-4 lg:px-8">
         <div className="flex items-center justify-between h-16 md:h-20 px-4">
-
           <Link href="/" className="flex items-center">
             <span className="text-xl md:text-2xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
               LUXE
@@ -56,13 +55,11 @@ function Header({ isScrolled = true, setIsMenuOpen, isMenuOpen }) {
             <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
               <Search className="w-5 h-5 lg:w-6 lg:h-6" />
             </button>
-            <button className="p-2 hover:bg-gray-100 rounded-full transition-colors">
-              <ShoppingCart className="w-5 h-5 lg:w-6 lg:h-6" />
-            </button>
+            <CartIcon /> {/* Add CartIcon here */}
             {user ? (
               <>
                 {user.role === 'admin' && (
-                  <Link href="/product/admin" className="text-sm lg:text-base text-gray-500 hover:text-purple-600 font-medium transition-colors">
+                  <Link href="/admin/dashboard" className="text-sm lg:text-base text-gray-500 hover:text-purple-600 font-medium transition-colors">
                     Admin Dashboard
                   </Link>
                 )}
@@ -71,7 +68,6 @@ function Header({ isScrolled = true, setIsMenuOpen, isMenuOpen }) {
                   <X className="w-5 h-5 lg:w-6 lg:h-6" />
                 </button>
               </>
-
             ) : (
               <Link href="/login" className="p-2 hover:bg-gray-100 rounded-full transition-colors">
                 <User className="w-5 h-5 lg:w-6 lg:h-6" />
@@ -90,4 +86,5 @@ function Header({ isScrolled = true, setIsMenuOpen, isMenuOpen }) {
     </header>
   );
 }
+
 export default Header;
